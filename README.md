@@ -1,3 +1,9 @@
+Hi! I'm Néstor and this is a fork of TweenJS that solve some perfomance issues with tweenJS and EaselJS movieclip playing, see commits for details
+
+for any question, feel free to ask me :-D
+
+
+
 # TweenJS
 
 TweenJS is a simple tweening library for use in Javascript. It was developed to integrate well with the EaselJS library,
