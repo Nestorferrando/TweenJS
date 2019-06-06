@@ -1,4 +1,4 @@
-Hi! I'm Néstor and this is a fork of TweenJS that solve some perfomance issues with tweenJS and EaselJS movieclip playing, see commits for details
+Hi! I'm Néstor and this is a fork of TweenJS that solves some perfomance issues with EaselJS movieclip playing, see commits for details
 
 for any question, feel free to ask me :-D
 
