@@ -689,9 +689,9 @@ this.createjs = this.createjs||{};
 	
 	p._binSearch = function binarySearch (t) {
 		  // initial values for start, middle and end
-		  let start = 0
-		  let stop = this._stepArray.length - 1
-		  let middle = Math.floor((start + stop) / 2)
+		  var start = 0;
+		  var stop = this._stepArray.length - 1;
+		  var middle = Math.floor((start + stop) / 2);
 
 		  // While the middle is not what we're looking for and the list does not have a single item
 		  while (this._stepArray[middle].t !== t && start < stop) {
