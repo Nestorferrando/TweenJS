@@ -687,7 +687,8 @@ this.createjs = this.createjs||{};
 	};
 	
 	
-	p._binSearch = function binarySearch (t) {
+	//binary search algorithm, return the closest previous time step (or the exact step if exists)
+	p._binSearch = function(t) {
 		  // initial values for start, middle and end
 		  var start = 0;
 		  var stop = this._stepArray.length - 1;
