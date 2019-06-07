@@ -661,16 +661,54 @@ this.createjs = this.createjs||{};
 	
 	// Docced in AbstractTween
 	p._updatePosition = function(jump, end) {
-		var step = this._stepHead.next, t=this.position, d=this.duration;
+		var t=this.position; 
+		var d=this.duration;
+		var step;
+
+		//most cases, next step is the target step
+		if (this._lastStep && this._lastStep.next && this._lastStep.next.t==t ) {
+			step = this._lastStep;}
+		// gotoandstop made or steps not defined for this t, do a binary search if posible
+		else {
+			if (this._stepArray) step = this._binSearch(t);
+			else step = this._stepHead;   
+			}
+
 		if (this.target && step) {
+				
 			// find our new step index:
 			var stepNext = step.next;
-			while (stepNext && stepNext.t <= t) { step = step.next; stepNext = step.next; }
+			while (stepNext && stepNext.t <= t) { step = step.next; stepNext = step.next;}
+			this._lastStep = step;
 			var ratio = end ? d === 0 ? 1 : t/d : (t-step.t)/step.d; // TODO: revisit this.
 			this._updateTargetProps(step, ratio, end);
 		}
 		this._stepPosition = step ? t-step.t : 0;
 	};
+	
+	
+	p._binSearch = function binarySearch (t) {
+		  // initial values for start, middle and end
+		  let start = 0
+		  let stop = this._stepArray.length - 1
+		  let middle = Math.floor((start + stop) / 2)
+
+		  // While the middle is not what we're looking for and the list does not have a single item
+		  while (this._stepArray[middle].t !== t && start < stop) {
+			if (t <= this._stepArray[middle].t) {
+			  stop = middle - 1
+			} else {
+			  start = middle + 1
+			}
+
+			// recalculate middle on every iteration
+			middle = Math.floor((start + stop) / 2)
+
+		  }
+		if (middle>0) middle--
+		  // return current middle
+		  return  this._stepArray[middle]
+		}
 	
 	/**
 	 * @method _updateTargetProps
@@ -819,6 +857,8 @@ this.createjs = this.createjs||{};
 	 */
 	p._addStep = function(duration, props, ease, passive) {
 		var step = new TweenStep(this._stepTail, this.duration, duration, props, ease, passive||false);
+		if (!this._stepArray) this._stepArray = []
+		this._stepArray[this._stepArray.length]=step;
 		this.duration += duration;
 		return this._stepTail = (this._stepTail.next = step);
 	};
